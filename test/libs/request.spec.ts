@@ -12,5 +12,11 @@ describe('request', () => {
       Request.get('')
       expect(requestPromise.get).toHaveBeenCalled()
     })
+
+    it('returns a Promise', () => {
+      spyOn(requestPromise, 'get').and.returnValue(new Promise(resolve => 'promise'))
+      const val = Request.get('')
+      expect(val instanceof Promise).toBeTruthy()
+    })
   })
 })
