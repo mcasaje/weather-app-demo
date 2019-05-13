@@ -1,5 +1,5 @@
 namespace HtmlParser {
-  export const findElement = (selector: string): string => {
+  export const findElement = (html: string, selector: string): string => {
     return selector
   }
 }
