@@ -3,24 +3,24 @@ import HtmlParser from '../../src/libs/html-parser'
 
 describe('HtmlParser', () => {
 
-  describe('findElement', () => {
+  describe('findElementText', () => {
     it('is defined', () => {
-      expect(HtmlParser.findElement).toBeDefined()
+      expect(HtmlParser.findElementText).toBeDefined()
     })
     it('calls \'cheerio.load()\'', () => {
       spyOn(cheerio, 'load')
-      HtmlParser.findElement('', '')
+      HtmlParser.findElementText('', '')
       expect(cheerio.load).toHaveBeenCalled()
     })
     it('returns expected \'div\' element from cheerio', () => {
-      const expectedResult = '<div class="crow">Crow</div>'
-      const html = `<div class="sparrow">Sparrow</div>${expectedResult}<div class="raven">Raven</div>`
+      const expectedResult = 'Crow'
+      const html = `<div class="sparrow">Sparrow</div><div class="crow">${expectedResult}</div><div class="raven">Raven</div>`
       const selector = '.crow'
-      const result = HtmlParser.findElement(html, selector)
+      const result = HtmlParser.findElementText(html, selector)
       expect(result).toBe(expectedResult)
     })
     it('returns a string', () => {
-      const result = HtmlParser.findElement('', '')
+      const result = HtmlParser.findElementText('', '')
       expect(typeof result === 'string').toBeTruthy()
     })
   })
