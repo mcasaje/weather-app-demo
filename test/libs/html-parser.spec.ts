@@ -8,7 +8,8 @@ describe('HtmlParser', () => {
       expect(HtmlParser.findElementText).toBeDefined()
     })
     it('calls \'cheerio.load()\'', () => {
-      spyOn(cheerio, 'load')
+      const mockCheerio = cheerio.load('')
+      spyOn(cheerio, 'load').and.returnValue(mockCheerio)
       HtmlParser.findElementText('', '')
       expect(cheerio.load).toHaveBeenCalled()
     })
