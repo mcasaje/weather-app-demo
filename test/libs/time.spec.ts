@@ -1,6 +1,7 @@
 import Time from '../../src/libs/time'
 
-fdescribe('Time', () => {
+describe('Time', () => {
+
   describe('getCurrentTime', () => {
     it('is defined', () => {
       expect(Time.getCurrentTime).toBeDefined()
@@ -26,4 +27,5 @@ fdescribe('Time', () => {
       expect(result).toBe(expectedTime)
     })
   })
+
 })
