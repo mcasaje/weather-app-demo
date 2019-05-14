@@ -1,6 +1,6 @@
 namespace Time {
   export const getCurrentTime = (): string => {
-    return ''
+    return '55:33:65'
   }
 }
 
