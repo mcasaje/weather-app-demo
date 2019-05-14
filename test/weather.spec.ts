@@ -18,13 +18,13 @@ describe('Weather', () => {
     it('is defined', () => {
       expect(Weather.fetchTextFromUrl).toBeDefined()
     })
-    it('returns temperature from external endpoint', () => {
+    it('returns temperature from external endpoint', async () => {
       const url = 'http://www.fakeurl.com'
       const htmlSelector = '#a .b'
       const expectedText = '30'
       const htmlResponse = `<div id="a">A<span class="b">${expectedText}</span>C</div>`
       spyOn(requestPromise, 'get').and.returnValue(Promise.resolve(htmlResponse))
-      const result = Weather.fetchTextFromUrl(url, htmlSelector)
+      const result = await Weather.fetchTextFromUrl(url, htmlSelector)
       expect(result).toBe(expectedText)
     })
   })
