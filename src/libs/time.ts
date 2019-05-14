@@ -1,5 +1,7 @@
 namespace Time {
-  export const getCurrentTime = () => {}
+  export const getCurrentTime = (): string => {
+    return ''
+  }
 }
 
 export default Time
