@@ -1,4 +1,3 @@
-
 import Weather from '../src/weather'
 
 describe('Weather', () => {
