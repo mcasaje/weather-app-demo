@@ -10,11 +10,11 @@ describe('Time', () => {
       const result = Time.getCurrentTime()
       expect(typeof result === 'string').toBeTruthy()
     })
-    it("returns time in the format of 'hh:mm:ss'", () => {
+    it('returns time in the format of \'hh:mm:ss\'', () => {
       const result = Time.getCurrentTime()
       expect(result).toMatch(/\d\d:\d\d:\d\d/)
     })
-    it("returns same time as time from 'new Date()'", () => {
+    it('returns same time as time from \'new Date()\'', () => {
       const result = Time.getCurrentTime()
       const timeNow = new Date()
       const hour = timeNow.getHours()
