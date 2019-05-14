@@ -18,6 +18,12 @@ describe('Weather', () => {
     it('is defined', () => {
       expect(Weather.logString).toBeDefined()
     })
+    it('calls \'console.log\'', () => {
+      const stringToLog = 'i-am-log'
+      spyOn(console, 'log')
+      Weather.logString(stringToLog)
+      expect(console.log).toHaveBeenCalledWith(stringToLog)
+    })
   })
 
 })
