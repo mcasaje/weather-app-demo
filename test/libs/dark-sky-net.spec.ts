@@ -70,11 +70,12 @@ describe('DarkSkyNet', () => {
       expect(DarkSkyNet.fetchWeatherInCelsius).toBeDefined()
     })
     it('returns expected weather string', async () => {
-      const geoLocation = {latitude: 49.2634, longitude: -122.955}
+      const latitude = 49.2634
+      const longitude = -122.955
       const expectedWeatherString = '14˚ Light Rain.'
       spyOn(Request, 'get').and.returnValue(Promise.resolve())
       spyOn(HtmlParser, 'findElementText').and.returnValue(expectedWeatherString)
-      const weatherString = await DarkSkyNet.fetchWeatherInCelsius(geoLocation)
+      const weatherString = await DarkSkyNet.fetchWeatherInCelsius(latitude, longitude)
       expect(weatherString).toBe(expectedWeatherString)
     })
   })
@@ -84,11 +85,12 @@ describe('DarkSkyNet', () => {
       expect(DarkSkyNet.fetchWeatherInFahrenheit).toBeDefined()
     })
     it('returns expected weather string', async () => {
-      const geoLocation = {latitude: 49.2634, longitude: -122.955}
+      const latitude = 49.2634
+      const longitude = -122.955
       const expectedWeatherString = '57˚ Light Rain.'
       spyOn(Request, 'get').and.returnValue(Promise.resolve())
       spyOn(HtmlParser, 'findElementText').and.returnValue(expectedWeatherString)
-      const weatherString = await DarkSkyNet.fetchWeatherInFahrenheit(geoLocation)
+      const weatherString = await DarkSkyNet.fetchWeatherInFahrenheit(latitude, longitude)
       expect(weatherString).toBe(expectedWeatherString)
     })
   })
