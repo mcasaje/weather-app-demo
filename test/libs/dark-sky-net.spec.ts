@@ -27,9 +27,9 @@ describe('DarkSkyNet', () => {
     })
   })
 
-  describe('fetchGeoCoordinatesForLocationName', () => {
+  describe('fetchGeoCoordinatesForQuery', () => {
     it('is defined', () => {
-      expect(DarkSkyNet.fetchGeoCoordinatesForLocationName).toBeDefined()
+      expect(DarkSkyNet.fetchGeoCoordinatesForQuery).toBeDefined()
     })
     it('returns geo location from DarkSky.Net', async () => {
       const locationName = 'Vancouver, BC'
@@ -39,27 +39,9 @@ describe('DarkSkyNet', () => {
         latitude: expectedLatitude,
         longitude: expectedLongitude,
       }
-      spyOn(Request, 'get').and.returnValue(Promise.resolve(mockGeoQueryResponse))
-      const geoLocation = await DarkSkyNet.fetchGeoCoordinatesForLocationName(locationName)
-      expect(geoLocation.latitude).toBe(expectedLatitude)
-      expect(geoLocation.longitude).toBe(expectedLongitude)
-    })
-  })
-
-  describe('fetchGeoCoordinatesForPostalCode', () => {
-    it('is defined', () => {
-      expect(DarkSkyNet.fetchGeoCoordinatesForPostalCode).toBeDefined()
-    })
-    it('returns geo location from DarkSky.Net', async () => {
-      const postalCode = 'V5A 1P2'
-      const expectedLatitude = 49.2634
-      const expectedLongitude = -122.955
-      const mockGeoQueryResponse = {
-        latitude: expectedLatitude,
-        longitude: expectedLongitude,
-      }
-      spyOn(Request, 'get').and.returnValue(Promise.resolve(mockGeoQueryResponse))
-      const geoLocation = await DarkSkyNet.fetchGeoCoordinatesForPostalCode(postalCode)
+      const mockGeoQueryResponseString = JSON.stringify(mockGeoQueryResponse)
+      spyOn(Request, 'get').and.returnValue(Promise.resolve(mockGeoQueryResponseString))
+      const geoLocation = await DarkSkyNet.fetchGeoCoordinatesForQuery(locationName)
       expect(geoLocation.latitude).toBe(expectedLatitude)
       expect(geoLocation.longitude).toBe(expectedLongitude)
     })
