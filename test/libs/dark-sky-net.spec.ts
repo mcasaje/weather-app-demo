@@ -38,7 +38,7 @@ describe('DarkSkyNet', () => {
         latitude: expectedLatitude,
         longitude: expectedLongitude,
       }
-      spyOn(Request, 'get').and.returnValue(mockGeoQueryResponse)
+      spyOn(Request, 'get').and.returnValue(Promise.resolve(mockGeoQueryResponse))
       const geoLocation = await DarkSkyNet.fetchGeoCoordinatesForLocationName(locationName)
       expect(geoLocation.latitude).toBe(expectedLatitude)
       expect(geoLocation.longitude).toBe(expectedLongitude)
@@ -57,7 +57,7 @@ describe('DarkSkyNet', () => {
         latitude: expectedLatitude,
         longitude: expectedLongitude,
       }
-      spyOn(Request, 'get').and.returnValue(mockGeoQueryResponse)
+      spyOn(Request, 'get').and.returnValue(Promise.resolve(mockGeoQueryResponse))
       const geoLocation = await DarkSkyNet.fetchGeoCoordinatesForPostalCode(postalCode)
       expect(geoLocation.latitude).toBe(expectedLatitude)
       expect(geoLocation.longitude).toBe(expectedLongitude)
