@@ -3,11 +3,18 @@ import HtmlParser from './libs/html-parser'
 
 namespace Weather {
   export const readTemperature = (weatherString: string): string => {
-    return ''
+    const weatherStringParts = weatherString.split(' ')
+    const temperature = weatherStringParts.length > 0 ? weatherStringParts[0] : '?'
+    return temperature
   }
 
   export const readForecast = (weatherString: string): string => {
-    return ''
+    const weatherStringParts = weatherString.split(' ')
+    let forecast = '?'
+    if (weatherStringParts.length > 1) {
+      forecast = weatherString.substr(weatherStringParts[0].length+1, weatherString.length)
+    }
+    return forecast
   }
 
   export const fetchTextFromHtmlPage = async (url: string, htmlSelector: string): Promise<string> => {
