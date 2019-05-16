@@ -2,15 +2,15 @@ import Request from './libs/request'
 import HtmlParser from './libs/html-parser'
 
 namespace Weather {
-  export const fetchTemperature = (): string => {
+  export const readTemperature = (weatherString: string): string => {
     return ''
   }
 
-  export const fetchForecast = (): string => {
+  export const readForecast = (weatherString: string): string => {
     return ''
   }
 
-  export const fetchTextFromUrl = async (url: string, htmlSelector: string): Promise<string> => {
+  export const fetchTextFromHtmlPage = async (url: string, htmlSelector: string): Promise<string> => {
     const htmlResponse = await Request.get(url)
     const text = HtmlParser.findElementText(htmlResponse, htmlSelector)
     return text
