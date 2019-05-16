@@ -1,5 +1,6 @@
 import DarkSkyNet from '../../src/libs/dark-sky-net'
 import Request from '../../src/libs/request'
+import HtmlParser from '../../src/libs/html-parser'
 
 describe('DarkSkyNet', () => {
   describe('readTemperature', () => {
@@ -61,6 +62,34 @@ describe('DarkSkyNet', () => {
       const geoLocation = await DarkSkyNet.fetchGeoCoordinatesForPostalCode(postalCode)
       expect(geoLocation.latitude).toBe(expectedLatitude)
       expect(geoLocation.longitude).toBe(expectedLongitude)
+    })
+  })
+
+  describe('fetchWeatherInCelsius', () => {
+    it('is defined', () => {
+      expect(DarkSkyNet.fetchWeatherInCelsius).toBeDefined()
+    })
+    it('returns expected weather string', async () => {
+      const geoLocation = {latitude: 49.2634, longitude: -122.955}
+      const expectedWeatherString = '14˚ Light Rain.'
+      spyOn(Request, 'get').and.returnValue(Promise.resolve())
+      spyOn(HtmlParser, 'findElementText').and.returnValue(expectedWeatherString)
+      const weatherString = await DarkSkyNet.fetchWeatherInCelsius(geoLocation)
+      expect(weatherString).toBe(expectedWeatherString)
+    })
+  })
+
+  describe('fetchWeatherInFahrenheit', () => {
+    it('is defined', () => {
+      expect(DarkSkyNet.fetchWeatherInFahrenheit).toBeDefined()
+    })
+    it('returns expected weather string', async () => {
+      const geoLocation = {latitude: 49.2634, longitude: -122.955}
+      const expectedWeatherString = '57˚ Light Rain.'
+      spyOn(Request, 'get').and.returnValue(Promise.resolve())
+      spyOn(HtmlParser, 'findElementText').and.returnValue(expectedWeatherString)
+      const weatherString = await DarkSkyNet.fetchWeatherInFahrenheit(geoLocation)
+      expect(weatherString).toBe(expectedWeatherString)
     })
   })
 })
