@@ -20,8 +20,8 @@ describe('DarkSkyNet', () => {
       expect(DarkSkyNet.readForecast).toBeDefined()
     })
     it('returns forecast from string', () => {
-      const expectedForecast = 'Mostly Cloudy.'
-      const weatherText = `55˚ ${expectedForecast}`
+      const expectedForecast = 'Mostly Cloudy'
+      const weatherText = `55˚ ${expectedForecast}.`
       const forecast = DarkSkyNet.readForecast(weatherText)
       expect(forecast).toBe(expectedForecast)
     })
@@ -37,7 +37,7 @@ describe('DarkSkyNet', () => {
       const expectedLongitude = -123.114
       const mockGeoQueryResponse = {
         latitude: expectedLatitude,
-        longitude: expectedLongitude,
+        longitude: expectedLongitude
       }
       const mockGeoQueryResponseString = JSON.stringify(mockGeoQueryResponse)
       spyOn(Request, 'get').and.returnValue(Promise.resolve(mockGeoQueryResponseString))
