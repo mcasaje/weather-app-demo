@@ -21,7 +21,10 @@ describe('Weather', () => {
       const expectedLocations = ['New York', 'San Francisco', 'New Orleans']
       const args = Weather.parseArgs(argumentVector)
       expect(args).toBeDefined()
-      expect(args.locations).toBe(expectedLocations)
+      expect(args.locations).toBeDefined()
+      expect(args.locations[0]).toBe(expectedLocations[0])
+      expect(args.locations[1]).toBe(expectedLocations[1])
+      expect(args.locations[2]).toBe(expectedLocations[2])
     })
   })
 
@@ -29,19 +32,24 @@ describe('Weather', () => {
     it('is defined', () => {
       expect(Weather.fetchWeatherForLocations).toBeDefined()
     })
-    it('returns an array of object containing forecast and temperatures', async () => {
-      const locations: string[] = ['Vancouver, BC']
-      const mockGeoLocation = {latitude: 10, longitude: -10}
-      const mockCelsius = '14˚'
-      const mockFahrenheit = '57˚'
-      const mockForecast = 'Light Rain'
-      const mockWeatherStringCelsius = `${mockCelsius} ${mockForecast}.`
-      const mockWeatherStringFahrenheit = `${mockFahrenheit} ${mockForecast}.`
+
+    const mockGeoLocation = {latitude: 10, longitude: -10}
+    const mockCelsius = '14˚'
+    const mockFahrenheit = '57˚'
+    const mockForecast = 'Light Rain'
+    const mockWeatherStringCelsius = `${mockCelsius} ${mockForecast}.`
+    const mockWeatherStringFahrenheit = `${mockFahrenheit} ${mockForecast}.`
+
+    beforeEach(() => {
       spyOn(DarkSkyNet, 'fetchGeoCoordinatesForQuery').and.returnValue(Promise.resolve(mockGeoLocation))
       spyOn(DarkSkyNet, 'fetchWeatherInCelsius').and.returnValue(Promise.resolve(mockWeatherStringCelsius))
       spyOn(DarkSkyNet, 'fetchWeatherInFahrenheit').and.returnValue(Promise.resolve(mockWeatherStringFahrenheit))
       spyOn(DarkSkyNet, 'readForecast').and.returnValue(mockForecast)
       spyOn(DarkSkyNet, 'readTemperature').and.returnValues(mockCelsius, mockFahrenheit)
+    })
+
+    it('returns an array of object containing forecast and temperatures', async () => {
+      const locations: string[] = ['Vancouver, BC']
       const weatherData = await Weather.fetchWeatherForLocations(locations)
       expect(weatherData).toBeDefined()
       expect(weatherData[0]).toBeDefined()
