@@ -90,7 +90,7 @@ describe('Weather', () => {
         const weatherData = await Weather.fetchWeatherForLocations(locations)
         expect(weatherData).toBeDefined()
         expect(weatherData[0]).toBeDefined()
-        expect(weatherData[0].location).toBe(errorSymbol)
+        expect(weatherData[0].location).toBe(locations[0])
         expect(weatherData[0].forecast).toBe(errorSymbol)
         expect(weatherData[0].temperature).toBeDefined()
         expect(weatherData[0].temperature.celsius).toBe(errorSymbol)

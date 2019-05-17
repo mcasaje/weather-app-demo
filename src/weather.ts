@@ -3,12 +3,15 @@ import Time from './libs/time'
 
 namespace Weather {
 
+  const NOT_FOUND_SYMBOL = '?'
+
   export const main = async () => {
     const args = parseArgs(process.argv)
     const currentTime: string = Time.getCurrentTime()
     const weatherData: any[] = await fetchWeatherForLocations(args.locations)
     console.log(`Time: ${currentTime}\n`)
     weatherData
+      .filter(weather => weather.success)
       .map(weather =>
         formatWeatherOutput(
           weather.location,
@@ -18,6 +21,9 @@ namespace Weather {
         )
       )
       .forEach(weatherString => console.log(weatherString))
+    weatherData
+      .filter(weather => !weather.success)
+      .forEach(weather => console.log(`Could not find location '${weather.location}'`))
   }
 
   export const parseArgs = (argsVector: string[]): any => {
@@ -32,13 +38,17 @@ namespace Weather {
 
   export const fetchWeatherForLocations = async (locations: string[]): Promise<any[]> => {
     return Promise.all(locations.map(async (location) => {
-      const geoLocation = await DarkSkyNet.fetchGeoCoordinatesForQuery(location)
-      const forecastWithCelsius = await DarkSkyNet.fetchWeatherInCelsius(geoLocation.latitude, geoLocation.longitude)
-      const forecastWithFahrenheit = await DarkSkyNet.fetchWeatherInFahrenheit(geoLocation.latitude, geoLocation.longitude)
-      const forecast = DarkSkyNet.readForecast(forecastWithCelsius)
-      const celsius = DarkSkyNet.readTemperature(forecastWithCelsius)
-      const fahrenheit = DarkSkyNet.readTemperature(forecastWithFahrenheit)
-      return createWeatherDataObject(location, forecast, celsius, fahrenheit)
+      try {
+        const geoLocation = await DarkSkyNet.fetchGeoCoordinatesForQuery(location)
+        const forecastWithCelsius = await DarkSkyNet.fetchWeatherInCelsius(geoLocation.latitude, geoLocation.longitude)
+        const forecastWithFahrenheit = await DarkSkyNet.fetchWeatherInFahrenheit(geoLocation.latitude, geoLocation.longitude)
+        const forecast = DarkSkyNet.readForecast(forecastWithCelsius)
+        const celsius = DarkSkyNet.readTemperature(forecastWithCelsius)
+        const fahrenheit = DarkSkyNet.readTemperature(forecastWithFahrenheit)
+        return createWeatherDataObject(true, location, forecast, celsius, fahrenheit)
+      } catch (e) {
+        return createWeatherDataObject(false, location)
+      }
     }))
   }
 
@@ -48,8 +58,13 @@ namespace Weather {
       + `Temp: ${celsius}C / ${fahrenheit}F\n`
   }
 
-  const createWeatherDataObject = (location: string, forecast: string, celsius: string, fahrenheit: string) => {
+  const createWeatherDataObject = (success: boolean,
+                                   location: string,
+                                   forecast: string = NOT_FOUND_SYMBOL,
+                                   celsius: string = NOT_FOUND_SYMBOL,
+                                   fahrenheit: string = NOT_FOUND_SYMBOL) => {
     const weatherObject = {
+      success,
       location,
       forecast,
       temperature: {
