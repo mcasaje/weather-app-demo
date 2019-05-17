@@ -5,7 +5,7 @@ namespace Weather {
 
   const NOT_FOUND_SYMBOL = '?'
 
-  export const main = async () => {
+  export const main = async (): Promise<void> => {
     const args = parseArgs(process.argv)
     const currentTime: string = Time.getCurrentTime()
     const weatherData: any[] = await fetchWeatherForLocations(args.locations)
@@ -79,4 +79,4 @@ namespace Weather {
 
 export default Weather
 
-Weather.main()
+Weather.main().then().catch()
