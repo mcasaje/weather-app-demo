@@ -7,16 +7,21 @@ describe('Weather', () => {
     it('is defined', () => {
       expect(Weather.parseArgs).toBeDefined()
     })
-    it('returns object with property "location"', () => {
+    it('returns locations separated by commas from process.argv', () => {
       const argumentVector: string[] = [
         '/usr/bin/node',
         'dist/lib/weather.js',
-        'Vancouver, BC',
-        'V7A 1W3'
+        'New',
+        'York,',
+        'San',
+        'Francisco,',
+        'New',
+        'Orleans'
       ]
+      const expectedLocations = ['New York', 'San Francisco', 'New Orleans']
       const args = Weather.parseArgs(argumentVector)
       expect(args).toBeDefined()
-      expect(args.locations).toBeDefined()
+      expect(args.locations).toBe(expectedLocations)
     })
   })
 
