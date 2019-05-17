@@ -7,7 +7,7 @@ namespace Request {
   }
 
   export const fetchTextFromHtmlPage = async (url: string, htmlSelector: string): Promise<string> => {
-    const htmlResponse = await Request.get(url)
+    const htmlResponse = await get(url)
     const text = HtmlParser.findElementText(htmlResponse, htmlSelector)
     return text
   }
