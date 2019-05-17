@@ -45,7 +45,7 @@ namespace Weather {
   export const formatWeatherOutput = (location: string, forecast: string, celsius: string, fahrenheit: string): string => {
     return `Location: ${location}\n`
       + `Forecast: ${forecast}\n`
-      + `Temp: ${celsius}C / ${fahrenheit}F\n\n`
+      + `Temp: ${celsius}C / ${fahrenheit}F\n`
   }
 
   const createWeatherDataObject = (location: string, forecast: string, celsius: string, fahrenheit: string) => {

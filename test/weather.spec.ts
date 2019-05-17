@@ -82,7 +82,7 @@ describe('Weather', () => {
       expect(formattedString).toBe(
         `Location: ${location}\n`
         + `Forecast: ${forecast}\n`
-        + `Temp: ${celsius}C / ${fahrenheit}F\n\n`)
+        + `Temp: ${celsius}C / ${fahrenheit}F\n`)
     })
   })
 
