@@ -12,6 +12,7 @@ namespace DarkSkyNet {
   }
 
   export const readForecast = (weatherString: string): string => {
+    weatherString = weatherString.replace('.', '')
     const weatherStringParts = weatherString.split(/\s/)
     let forecast = '?'
     if (weatherStringParts.length > 1) {
