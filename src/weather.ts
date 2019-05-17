@@ -8,19 +8,25 @@ namespace Weather {
     const currentTime: string = Time.getCurrentTime()
     const weatherData: any[] = await fetchWeatherForLocations(args.locations)
     console.log(`Time: ${currentTime}\n`)
-    weatherData.map((weather) => formatWeatherOutput(
-      weather.location,
-      weather.forecast,
-      weather.temperature.celsius,
-      weather.temperature.fahrenheit))
-      .forEach((weatherString) => console.log(weatherString))
+    weatherData
+      .map(weather =>
+        formatWeatherOutput(
+          weather.location,
+          weather.forecast,
+          weather.temperature.celsius,
+          weather.temperature.fahrenheit
+        )
+      )
+      .forEach(weatherString => console.log(weatherString))
   }
 
   export const parseArgs = (argsVector: string[]): any => {
-    const locations = argsVector.slice(2, argsVector.length)
+    const locations = argsVector
+      .slice(2, argsVector.length)
       .join(' ')
       .split(',')
       .map(location => location.trim())
+      .filter(location => location.length > 0)
     return {locations}
   }
 
@@ -48,7 +54,7 @@ namespace Weather {
       forecast,
       temperature: {
         celsius,
-        fahrenheit,
+        fahrenheit
       }
     }
     return weatherObject

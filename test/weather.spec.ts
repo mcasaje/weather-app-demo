@@ -16,12 +16,14 @@ describe('Weather', () => {
         'San',
         'Francisco,',
         'New',
-        'Orleans'
+        'Orleans,'
       ]
       const expectedLocations = ['New York', 'San Francisco', 'New Orleans']
       const args = Weather.parseArgs(argumentVector)
+      console.log(args)
       expect(args).toBeDefined()
       expect(args.locations).toBeDefined()
+      expect(args.locations.length).toEqual(expectedLocations.length)
       expect(args.locations[0]).toBe(expectedLocations[0])
       expect(args.locations[1]).toBe(expectedLocations[1])
       expect(args.locations[2]).toBe(expectedLocations[2])
@@ -74,13 +76,13 @@ describe('Weather', () => {
     it('returns expected string', () => {
       const location: string = 'Whistler, BC'
       const forecast: string = 'Cloudy'
-      const temperatureInCelsius: string = '14˚'
-      const temperatureInFahrenheit: string = '57˚'
-      const formattedString = Weather.formatWeatherOutput(location, forecast, temperatureInCelsius, temperatureInFahrenheit)
+      const celsius: string = '14˚'
+      const fahrenheit: string = '57˚'
+      const formattedString = Weather.formatWeatherOutput(location, forecast, celsius, fahrenheit)
       expect(formattedString).toBe(
         `Location: ${location}\n`
         + `Forecast: ${forecast}\n`
-        + `Temp: ${temperatureInCelsius}C / ${temperatureInFahrenheit}F\n\n`)
+        + `Temp: ${celsius}C / ${fahrenheit}F\n\n`)
     })
   })
 
