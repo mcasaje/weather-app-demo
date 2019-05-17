@@ -54,20 +54,18 @@ describe('Weather', () => {
     })
   })
 
-  describe('formatOutput', () => {
+  describe('formatWeatherOutput', () => {
     it('is defined', () => {
-      expect(Weather.formatOutput).toBeDefined()
+      expect(Weather.formatWeatherOutput).toBeDefined()
     })
     it('returns expected string', () => {
       const location: string = 'Whistler, BC'
-      const time: string = '12:59:59'
       const forecast: string = 'Cloudy'
       const temperatureInCelsius: string = '14˚'
       const temperatureInFahrenheit: string = '57˚'
-      const formattedString = Weather.formatOutput(location, time, forecast, temperatureInCelsius, temperatureInFahrenheit)
+      const formattedString = Weather.formatWeatherOutput(location, forecast, temperatureInCelsius, temperatureInFahrenheit)
       expect(formattedString).toBe(
         `Location: ${location}\n`
-        + `Time: ${time}\n`
         + `Forecast: ${forecast}\n`
         + `Temp: ${temperatureInCelsius}C / ${temperatureInFahrenheit}F\n\n`)
     })

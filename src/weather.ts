@@ -1,6 +1,17 @@
 import DarkSkyNet from './libs/dark-sky-net'
+import Time from './libs/time'
 
 namespace Weather {
+
+  export const main = async () => {
+    const args = parseArgs(process.argv)
+    const currentTime: string = Time.getCurrentTime()
+    const weatherData: any[] = await fetchWeatherForLocations(args.locations)
+    console.log(`Time: ${currentTime}\n`)
+    weatherData.map((weather) => formatWeatherOutput(
+      weather.location, weather.forecast, weather.temperature.celsius, weather.temperature.fahrenheit))
+      .forEach((weatherString) => console.log(weatherString))
+  }
 
   export const parseArgs = (argsVector: string[]): any => {
     const locations = argsVector.slice(2, argsVector.length)
@@ -15,14 +26,12 @@ namespace Weather {
       const forecast = DarkSkyNet.readForecast(forecastWithCelsius)
       const celsius = DarkSkyNet.readTemperature(forecastWithCelsius)
       const fahrenheit = DarkSkyNet.readTemperature(forecastWithFahrenheit)
-      const data = createWeatherDataObject(location, forecast, celsius, fahrenheit)
-      return data
+      return createWeatherDataObject(location, forecast, celsius, fahrenheit)
     }))
   }
 
-  export const formatOutput = (location: string, time: string, forecast: string, celsius: string, fahrenheit: string) => {
+  export const formatWeatherOutput = (location: string, forecast: string, celsius: string, fahrenheit: string): string => {
     return `Location: ${location}\n`
-      + `Time: ${time}\n`
       + `Forecast: ${forecast}\n`
       + `Temp: ${celsius}C / ${fahrenheit}F\n\n`
   }
@@ -42,3 +51,5 @@ namespace Weather {
 }
 
 export default Weather
+
+Weather.main()
